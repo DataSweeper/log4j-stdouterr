@@ -1,0 +1,38 @@
+
+<project name="log4jstdouterr" default="run">
+
+    <!--<path id="classpath" location="log4j-1.2.17.jar"/>-->
+
+    <target name="clean">
+        <delete dir="out"/>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="out/classes"/>
+        <javac srcdir="src" destdir="out/classes" includeantruntime="false">
+            <classpath>
+                <pathelement location="log4j-1.2.17.jar"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="jar" depends="compile">
+        <mkdir dir="out/jar"/>
+        <jar destfile="out/jar/log4jstdouterr.jar" basedir="out/classes">
+            <manifest>
+                <attribute name="Main-Class" value="com.log4jstdouterr.Main"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="run" depends="jar">
+        <java fork="true" classname="com.log4jstdouterr.Main">
+            <sysproperty key="java.util.logging.config.file" value="log.properties"/>
+            <classpath>
+                <pathelement location="log4j-1.2.17.jar"/>
+                <pathelement location="out/jar/log4jstdouterr.jar"/>
+            </classpath>
+        </java>
+    </target>
+
+</project>
