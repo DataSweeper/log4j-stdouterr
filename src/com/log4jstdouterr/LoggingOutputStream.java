@@ -54,7 +54,7 @@ public class LoggingOutputStream extends OutputStream {
         final byte[] bytes = new byte[count];
         System.arraycopy(buf, 0, bytes, 0, count);
         String str = new String(bytes);
-        if(!str.equals("\n")) {
+        if (!str.equals("\n")) {
             log.log(level, str);
         }
         count = 0;

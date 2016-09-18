@@ -22,19 +22,15 @@ public class StdouterrConfigurator extends PropertyConfigurator {
     }
 
     public static void setstd() {
-        try {
-            Logger logger = Logger.getLogger("stderr");
-            LoggingOutputStream los = new LoggingOutputStream(logger, CustomLevel.STDERR);
-            Logger logger1 = Logger.getLogger("stdout");
-            LoggingOutputStream los1 = new LoggingOutputStream(logger1, CustomLevel.STDOUT);
-			System.setOut(outputFile(los1));
-			System.setErr(outputFile(los));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+        Logger logger = Logger.getLogger("stderr");
+        LoggingOutputStream los = new LoggingOutputStream(logger, CustomLevel.STDERR);
+        Logger logger1 = Logger.getLogger("stdout");
+        LoggingOutputStream los1 = new LoggingOutputStream(logger1, CustomLevel.STDOUT);
+	    System.setOut(outputFile(los1));
+	    System.setErr(outputFile(los));
     }
 
-    protected static PrintStream outputFile(LoggingOutputStream name) throws FileNotFoundException {
+    protected static PrintStream outputFile(LoggingOutputStream name) {
         return new PrintStream(name, true);
     }
 }
