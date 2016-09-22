@@ -15,6 +15,9 @@ public class LoggingOutputStream extends OutputStream {
     private int curBufLength;
     private Logger log;
     private Level level;
+    private String trace = "";
+    private boolean fistline = false;
+    private TracePrint tp;
 
     public LoggingOutputStream(final Logger log, final Level level) throws IllegalArgumentException {
         super();
@@ -27,6 +30,7 @@ public class LoggingOutputStream extends OutputStream {
         curBufLength = DEFAULT_BUFFER_LENGTH;
         buf = new byte[curBufLength];
         count = 0;
+        tp = new TracePrint(log, level);
     }
 
     public void write(final int b) throws IOException {
@@ -55,9 +59,21 @@ public class LoggingOutputStream extends OutputStream {
         System.arraycopy(buf, 0, bytes, 0, count);
         String str = new String(bytes);
         if (!str.equals("\n")) {
-            log.log(level, str);
+            if(this.level == CustomLevel.STDERR) {
+                tp.print(str);
+            } else {
+                log.log(level, str);
+            }
         }
         count = 0;
+    }
+
+    private void setfistlinefalse() {
+        fistline = false;
+    }
+
+    private void setfistline() {
+        fistline = true;
     }
 
     public void close() {

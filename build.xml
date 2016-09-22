@@ -5,6 +5,10 @@
 
     <target name="clean">
         <delete dir="out"/>
+        <delete dir="out"/>
+        <delete>
+            <fileset dir="." includes="**/*.txt"/>
+        </delete>
     </target>
 
     <target name="compile">
